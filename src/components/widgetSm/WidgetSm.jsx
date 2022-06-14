@@ -2,6 +2,7 @@ import "./widgetSm.css";
 import { Visibility } from "@material-ui/icons";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import image from '../../images/stockphoto.jpeg'
 
 export default function WidgetSm() {
 
@@ -16,7 +17,6 @@ export default function WidgetSm() {
         }
         })
         setNewusers(res.data);
-        console.log(res.data)
       } catch (err) {
       console.log(err)
       }
@@ -33,7 +33,7 @@ export default function WidgetSm() {
         
         <li className="widgetSmListItem">
           <img
-            src={user.profilePicture || 'https://c.tenor.com/7Dd4i9TgnW8AAAAM/ena-animated-profile-picture.gif'}
+            src={user.profilePicture[0]?.profilePicture || image}
             alt=""
             className="widgetSmImg"
           />

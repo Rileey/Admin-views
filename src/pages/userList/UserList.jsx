@@ -1,5 +1,5 @@
 import "./userList.css";
-import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid, GridToolbar } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
@@ -7,35 +7,21 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/userContext/userContext"
 import { deleteUsers, getUsers } from "../../context/userContext/apiCalls";
 import axios from 'axios';
+import image from '../../images/stockphoto.jpeg'
 
 export default function UserList() {
-  // const [data, setData] = useState(userRows);
-
   const {users, dispatch} = useContext(UserContext)
-  // const [user, setUser] = useState(userRows)
+  const [searched, setSearched] = useState('')
+  const [rows, setRows] = useState([])
 
   useEffect(() => {
     getUsers(dispatch);
   }, [dispatch])
 
-  // useEffect(() => {
-  //   const getNewUsers = async () => {
-  //     try {
-  //     const res = await axios.get('/users', {
-  //       headers: {
-  //         token: 'Bearer '+ JSON.parse(localStorage.getItem('user')).accessToken 
-  //       }
-  //       })
-  //       setUser(res.data);
-  //       console.log(res.data)
-  //     } catch (err) {
-  //     console.log(err)
-  //     }
-  //   }
-  //   getNewUsers()
-  // }, [])
-
-  console.log(users)
+  
+  if (users === [] || users.length === 0){
+    return null
+  }
 
   // const handleDelete = (id) => {
   //   setData(data.filter((item) => item.id !== id));
@@ -48,13 +34,25 @@ export default function UserList() {
   const columns = [
     // { field: "id", headerName: "ID", width: 200 },
     {
-      field: "user",
-      headerName: "UserNumber",
+      field: "username",
+      headerName: "Userame",
       width: 120,
       renderCell: (params) => {
         return (
           <div className="userListUser">
-            + { params.row.phoneNumber }
+            { params.row.username }
+          </div>
+        );
+      },
+    },
+    {
+      field: "number",
+      headerName: "Number",
+      width: 150,
+      renderCell: (params) => {
+        return (
+          <div className="userListUser">
+            +234 { params.row.phoneNumber }
           </div>
         );
       },
@@ -63,7 +61,7 @@ export default function UserList() {
     renderCell: (params) => {
       return (
         <div className="userListUser">
-          <img className="userListImg" src={params.row.profilePicture || 'https://c.tenor.com/7Dd4i9TgnW8AAAAM/ena-animated-profile-picture.gif'} alt="" />
+          <img className="userListImg" src={params.row.profilePicture[0]?.profilePicture || image} alt="" />
           { params.row.email }
         </div>
       );
@@ -100,14 +98,17 @@ export default function UserList() {
 
   return (
     <div className="userList">
+      <div className="top-container">
         <Link to="/newUser">
           <button className="userAddButton1">Create</button>
         </Link>
+      </div>  
       <DataGrid
         rows={users}
         disableSelectionOnClick
         columns={columns}
         pageSize={8}
+        components={{Toolbar: GridToolbar}}
         checkboxSelection
         getRowId={(r) => r._id}
       />
