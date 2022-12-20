@@ -1,5 +1,5 @@
 import "./movieList.css";
-import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid, GridToolbar } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 
 import { Link } from "react-router-dom";
@@ -18,6 +18,10 @@ export default function MovieList() {
   const handleDelete = (id) => {
     deleteList(id, dispatch);
   };
+ 
+  if (lists === [] || lists.length === 0){
+    return null
+  }
 
   console.log(lists)
 
@@ -56,6 +60,7 @@ export default function MovieList() {
         disableSelectionOnClick
         columns={columns}
         pageSize={8}
+        components={{Toolbar: GridToolbar}}
         checkboxSelection
         getRowId={(r) => r._id}
       />

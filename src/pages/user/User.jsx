@@ -8,11 +8,15 @@ import {
 } from "@material-ui/icons";
 import { Link, useLocation } from "react-router-dom";
 import "./user.css";
+import image from '../../images/stockphoto.jpeg'
 
 export default function User() {
 
   const location = useLocation();
   const user = location.user
+  if (!user) {
+    return null
+  }
 
 
   return (
@@ -24,12 +28,12 @@ export default function User() {
         <div className="userShow">
           <div className="userShowTop">
             <img
-              src={user.profilePicture || 'https://c.tenor.com/7Dd4i9TgnW8AAAAM/ena-animated-profile-picture.gif'}
+              src={user.profilePicture[0]?.profilePicture || image}
               alt=""
               className="userShowImg"
             />
             <div className="userShowTopTitle">
-              <span className="userShowUsername">Anna Becker</span>
+              <span className="userShowUsername">{user.username}</span>
             </div>
           </div>
           <div className="userShowBottom">
@@ -41,10 +45,6 @@ export default function User() {
             <div className="userShowInfo">
               <MailOutline className="userShowIcon" />
               <span className="userShowInfoTitle">{user.email}</span>
-            </div>
-            <div className="userShowInfo">
-              <LocationSearching className="userShowIcon" />
-              <span className="userShowInfoTitle">New York | USA</span>
             </div>
           </div>
         </div>
@@ -58,7 +58,7 @@ export default function User() {
                 <label>Full Name</label>
                 <input
                   type="text"
-                  placeholder="full name"
+                  placeholder={user.username}
                   className="userUpdateInput"
                 />
               </div>
@@ -91,7 +91,7 @@ export default function User() {
               <div className="userUpdateUpload">
                 <img
                   className="userUpdateImg"
-                  src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                  src={user.profilePicture[0]?.profilePicture || image}
                   alt=""
                 />
                 <label htmlFor="file">

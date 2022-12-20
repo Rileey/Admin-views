@@ -1,18 +1,21 @@
 import "./movies.css";
-import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid, GridToolbar } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 
 import { Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from 'axios'
 import { MovieContext }  from '../../context/movieContext/movieContext'
 import { deleteMovie, getMovies } from '../../context/movieContext/apiCalls'
 
 export default function Movies() {
   const {movies, dispatch} = useContext(MovieContext)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
      getMovies(dispatch);
+     setLoading(false)
 
   }, [dispatch])
 
@@ -23,10 +26,10 @@ export default function Movies() {
   };
 
   const columns = [
-    { field: "_id", headerName: "ID", width: 100 },
+    // { field: "_id", headerName: "ID", width: 100 },
     {
-      field: "movie",
-      headerName: "Movie",
+      field: "title",
+      headerName: "Title",
       width: 200,
       renderCell: (params) => {
         return (
@@ -66,14 +69,15 @@ export default function Movies() {
       <Link to="/newmoviepage1">
           <button className="productAddButton1">Create Movie</button>
         </Link>
-      <DataGrid
-        rows={movies}
-        disableSelectionOnClick
-        columns={columns}
-        pageSize={8}
-        checkboxSelection
-        getRowId={(r) => r._id}
-      />
+          <DataGrid
+            rows={movies}
+            disableSelectionOnClick
+            columns={columns}
+            components={{Toolbar: GridToolbar}}
+            pageSize={8}
+            checkboxSelection
+            getRowId={(r) => r._id}
+          />
     </div>
   );
 }
