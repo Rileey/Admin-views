@@ -155,7 +155,7 @@ export default function Movie() {
                   onChange={(e)=> setThumbnail(e.target.files, console.log(e.target.files))}
                   />
                   <label>Trailer</label>
-                  <input type="file" placeholder={movie.trailer} 
+                  <input type="file" placeholder={movie.trailer}
                   onChange={(e)=> setTrailer(e.target.files, console.log(e.target.files))}
                   />
                   <label>Movie Title</label>
