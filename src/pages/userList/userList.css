@@ -7,11 +7,6 @@
   align-items: center;
 }
 
-.search {
-  display: flex;
-  justify-content: center;
-}
-
 .userListImg {
   width: 32px;
   height: 32px;
@@ -33,15 +28,4 @@
 .userListDelete{
     color: red;
     cursor: pointer;
-}
-
-.userAddButton1 {
-  margin-bottom: 20px;
-  margin-left: 20px;
-  background-color: #ff7e00;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 17px;
-  cursor: pointer;
 }

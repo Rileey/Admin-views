@@ -1,35 +1,53 @@
 import "./movieList.css";
-import { DataGrid, GridToolbar } from "@material-ui/data-grid";
+import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-
 import { Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
-import { ListContext } from "../../context/listContext/listContext";
-import { deleteList, getLists } from "../../context/listContext/apiCalls";
+import { useContext, useEffect, useState } from "react";
+import { MovieContext } from "../../context/movieContext/MovieContext";
+import { deleteMovie, getMovies } from "../../context/movieContext/apiCalls";
 
 export default function MovieList() {
-  const {lists, dispatch} = useContext(ListContext)
+  const { movies, dispatch } = useContext(MovieContext);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-     getLists(dispatch);
+    setLoading(true)
+     getMovies(dispatch);
+     setLoading(false)
 
   }, [dispatch])
 
   const handleDelete = (id) => {
-    deleteList(id, dispatch);
+    deleteMovie(id, dispatch);
+    window.location.reload()
   };
- 
-  if (lists === [] || lists.length === 0){
+
+  if (movies === [] || movies.length === 0){
     return null
   }
 
-  console.log(lists)
 
   const columns = [
-    { field: "_id", headerName: "ID", width: 200 },
-    { field: "title", headerName: "Title", width: 200 },
-    { field: "genre", headerName: "Genre", width: 200 },
-    { field: "type", headerName: "Type", width: 200 },
+    { field: "id", headerName: "ID", width: 90 },
+    {
+      field: "movie",
+      headerName: "Movie",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div className="productListItem">
+            <img className="productListImg" src={params?.row?.thumbnail} alt="" />
+            {params.row.name}
+          </div>
+        );
+      },
+    },
+    { field: "type", headerName: "Type", width: 120 },
+    { field: "genre", headerName: "Genre", width: 120 },
+    { field: "year", headerName: "Year", width: 120 },
+    { field: "age_rating", headerName: "AgeRating", width: 120 },
+    { field: "director", headerName: "Director", width: 120 },
+
     {
       field: "action",
       headerName: "Action",
@@ -37,12 +55,12 @@ export default function MovieList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={{pathname: "/list/" + params.row._id, list: params.row}}>
+            <Link to={{ pathname: "/movie/" + params.row.id, movie: params.row }}>
               <button className="productListEdit">Edit</button>
             </Link>
             <DeleteOutline
               className="productListDelete"
-              onClick={() => handleDelete(params.row._id)}
+              onClick={() => handleDelete(params.row.id)}
             />
           </>
         );
@@ -52,17 +70,13 @@ export default function MovieList() {
 
   return (
     <div className="productList">
-      <Link to="/newlist">
-          <button className="productAddButton1">Create Movie List</button>
-        </Link>
       <DataGrid
-        rows={lists}
+        rows={movies}
         disableSelectionOnClick
         columns={columns}
         pageSize={8}
-        components={{Toolbar: GridToolbar}}
         checkboxSelection
-        getRowId={(r) => r._id}
+        getRowId={(r) => r.id}
       />
     </div>
   );

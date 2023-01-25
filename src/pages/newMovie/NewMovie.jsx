@@ -1,209 +1,186 @@
-import { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router";
-import { getContent } from "../../context/contentContext/apiCalls";
-import { ContentContext } from "../../context/contentContext/contentContext";
-import { createMovie } from "../../context/movieContext/apiCalls";
-import { MovieContext } from "../../context/movieContext/movieContext";
+import { useContext, useState } from "react";
+import { ListContext } from "../../context/listContext/ListContext";
+import { MovieContext } from "../../context/movieContext/MovieContext";
 import "./newMovie.css";
-import axios from 'axios'
+// import { createMovie } from "../../context/movieContext/apiCalls";
+// import { MovieContext } from "../../context/movieContext/MovieContext";
 
-export default function NewProduct() {
+export default function NewMovie() {
+  const [movie, setMovie] = useState(null);
+  const [img, setImg] = useState(null);
+  const [imgTitle, setImgTitle] = useState(null);
+  const [imgSm, setImgSm] = useState(null);
+  const [trailer, setTrailer] = useState(null);
+  const [video, setVideo] = useState(null);
+  const [uploaded, setUploaded] = useState(0);
 
-  const [movie, setMovie] = useState({})
-  // const [cont, setContent] = useState([])
-  const [file, setFile] = useState({})
-  const [thumbnail, setThumbnail] = useState({})
-  const [trailer, setTrailer] = useState({})
-  const [checked, setChecked] = useState(false)
-  const [selectedContent, setSelectedContent] = useState([])
-  const history = useHistory();
-
-  const { content, dispatch: dispatchContent } = useContext(ContentContext)
-
-  useEffect(() => {
-    getContent(dispatchContent)
-  }, [dispatchContent])
+  const { dispatch } = useContext(MovieContext);
 
   const handleChange = (e) => {
-    const value = e.target.value
-    setMovie({...movie, [e.target.name]: value, content: selectedContent})
-    console.log(movie, selectedContent)
-  }
-
-  // const handleSelect = (e) => {
-  //   let value = Array.from(e.target.selectedOptions, (option) => option.value)
-  //   setMovie({...movie, [e.target.name]: value})
-  // }
-
-  // const handleChecked = (e, content) => {
-  //   setChecked(!checked)
-
-  //   e.target.checked && selectedContent.push(content)
-  // }
-
-    // console.log(checked)
-
-console.log(selectedContent)
-// console.log(movie.content)
-
-console.log(file)
-  const handleStart = async (e) => {
-    e.preventDefault()
-
-    let formdata = new FormData()
-    formdata.append('title', movie.title)
-    for (let i = 0; i < file.length; i++) {
-      formdata.append('image', file[i], file[i].name)
-    }
-    for (let i = 0; i < thumbnail.length; i++) {
-    formdata.append('thumbnail', thumbnail[i])
-    }
-    for (let i = 0; i < trailer.length; i++) {
-      formdata.append('trailer', trailer[i])
-      }
-    formdata.append('description', movie.description)
-    formdata.append('director', movie.director)
-    formdata.append('year', movie.year)
-    formdata.append('ageLimit', movie.ageLimit)
-    formdata.append('genre', movie.genre)
-    formdata.append('duration', movie.duration)
-    formdata.append('isSeries', movie.isSeries)
-    
-    for (let i = 0; i < selectedContent.length; i++) {
-      // var content = JSON.stringify(selectedContent[i])
-      formdata.append('content', selectedContent[i])
-      
-    }
-  
-
-    const response =  await axios.post('/movies', formdata, {
-      headers: {
-        token: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOTRjOTQyZDI3MjU2MDQ3NjMwOTE1MiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzODA1NDI4MywiZXhwIjoxNjQwNjQ2MjgzfQ.-wK6MoeZembvg5rXNXuHYm3HpY5izx0iq3xf00DMHE4',
-        'Content-Type': 'multipart/form-data'
-      }, 
-    })
-    console.log(response, 'responsee')
-    // handleFileChange()
-    // createMovie(movie, dispatch)
-
-    history.push('/movies')
+    const value = e.target.value;
+    setMovie({ ...movie, [e.target.name]: value });
+  };
 
 
-  }
+  const upload = (items) => {
+    // items.forEach((item) => {
+    //   const fileName = new Date().getTime() + item.label + item.file.name;
+    //   const uploadTask = storage.ref(`/items/${fileName}`).put(item.file);
+    //   uploadTask.on(
+    //     "state_changed",
+    //     (snapshot) => {
+    //       const progress =
+    //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //       console.log("Upload is " + progress + "% done");
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //     },
+    //     () => {
+    //       uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+    //         setMovie((prev) => {
+    //           return { ...prev, [item.label]: url };
+    //         });
+    //         setUploaded((prev) => prev + 1);
+    //       });
+    //     }
+    //   );
+    // });
+  };
+
+  const handleUpload = (e) => {
+    e.preventDefault();
+    upload([
+      { file: img, label: "img" },
+      { file: imgTitle, label: "imgTitle" },
+      { file: imgSm, label: "imgSm" },
+      { file: trailer, label: "trailer" },
+      { file: video, label: "video" },
+    ]);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // createMovie(movie, dispatch);
+  };
 
   return (
     <div className="newProduct">
-      <h1 className="addProductTitle">Add Movie</h1>
-        <form encType="multipart/form-data" className="addProductForm" onSubmit={handleStart} >
+      <h1 className="addProductTitle">New Movie</h1>
+      <form className="addProductForm">
         <div className="addProductItem">
           <label>Image</label>
-          <input type="file" id="image" 
-          multiple
-          // onChange={handleFileChange} 
-          onChange={(e)=> setFile(e.target.files, console.log(e.target.files))}/>
+          <input
+            type="file"
+            id="img"
+            name="img"
+            onChange={(e) => setImg(e.target.files[0])}
+          />
         </div>
         <div className="addProductItem">
-          <label>Thumbnail</label>
-          <input type="file" id="image" 
-          // onChange={handleFileChange} 
-          onChange={(e)=> setThumbnail(e.target.files, console.log(e.target.files))}/>
+          <label>Title image</label>
+          <input
+            type="file"
+            id="imgTitle"
+            name="imgTitle"
+            onChange={(e) => setImgTitle(e.target.files[0])}
+          />
         </div>
         <div className="addProductItem">
-          <label>Trailer</label>
-          <input type="file" id="image"  
-          // onChange={handleFileChange} 
-          onChange={(e)=> setTrailer(e.target.files, console.log(e.target.files))}/>
+          <label>Thumbnail image</label>
+          <input
+            type="file"
+            id="imgSm"
+            name="imgSm"
+            onChange={(e) => setImgSm(e.target.files[0])}
+          />
         </div>
         <div className="addProductItem">
           <label>Title</label>
-          <input type="text" placeholder="The Crackdown" name="title" onChange={handleChange}/>
+          <input
+            type="text"
+            placeholder="John Wick"
+            name="title"
+            onChange={handleChange}
+          />
         </div>
         <div className="addProductItem">
           <label>Description</label>
-          <input type="text" placeholder="Decription" name="description" onChange={handleChange}/>
-        </div>
-        <div className="addProductItem">
-          <label>Director</label>
-          <input type="text" placeholder="..." name="director" onChange={handleChange}/>
+          <input
+            type="text"
+            placeholder="description"
+            name="desc"
+            onChange={handleChange}
+          />
         </div>
         <div className="addProductItem">
           <label>Year</label>
-          <input type="text" placeholder="199-" name="year" onChange={handleChange}/>
-        </div>
-        <div className="addProductItem">
-          <label>AgeLimit</label>
-          <input type="text" placeholder="17" name="ageLimit" onChange={handleChange}/>
+          <input
+            type="text"
+            placeholder="Year"
+            name="year"
+            onChange={handleChange}
+          />
         </div>
         <div className="addProductItem">
           <label>Genre</label>
-          <select name='genre' onChange={handleChange}>
-          <option value='Adventure'>Adventure</option>
-            <option value='Comedy'>Comedy</option>
-            <option value='Crime'>Crime</option>
-            <option value='Fantasy'>Fantasy</option>
-            <option value='Historical'>Historical</option>
-            <option value='Horror'>Horror</option>
-            <option value='Romance'>Romance</option>
-            <option value='Sci-fi'>Sci-fi</option>
-            <option value='Thriller'>Thriller</option>
-            <option value='Cartoons'>Cartoons</option>
-            <option value='Drama'>Drama</option>
-            <option value='Documentary'>Documentary</option>
-          </select>
+          <input
+            type="text"
+            placeholder="Genre"
+            name="genre"
+            onChange={handleChange}
+          />
         </div>
         <div className="addProductItem">
           <label>Duration</label>
-          <input type="text" placeholder="Duration" name="duration" onChange={handleChange}/>
+          <input
+            type="text"
+            placeholder="Duration"
+            name="duration"
+            onChange={handleChange}
+          />
         </div>
         <div className="addProductItem">
-          <label>isSeries?</label>
+          <label>Limit</label>
+          <input
+            type="text"
+            placeholder="limit"
+            name="limit"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="addProductItem">
+          <label>Is Series?</label>
           <select name="isSeries" id="isSeries" onChange={handleChange}>
-            <option>Choose</option>
-            <option value="false">Movie</option>
-            <option value="true">Series</option>
+            <option value="false">No</option>
+            <option value="true">Yes</option>
           </select>
         </div>
-        <div className="addProductItem" id="last" style={{
-            overflow:"scroll",
-            height: "150px"
-          }}>
-          <label >Content</label>
-          {content.map((newContent) => (
-            <div key={newContent._id}>
-            <input type="checkbox"
-            name="content"
-            defaultChecked={checked}
-            onChange={(e)=>{
-              e.target.checked ? setSelectedContent(prev=> [...prev,
-                //  {
-                  //  contentId:
-                    newContent._id
-                  // }
-                ]) : setSelectedContent(selectedContent.filter(content=>content.id !== newContent.id))
-              
-            }}
-            />
-            <label >{newContent.title}</label>
-            </div>
-          ))}
-          
-          {/* <select multiple name='content' onChange={handleSelect} style={{height: '280px'}}>
-            {content.map((newContent)=> (
-              <option key={newContent._id} 
-              value={newContent}
-              >{newContent.title}</option>
-              
-            ))} */}
-            {/* {content.map((newContent).filter(newContent => newContent._id) =>(
-            // 
-           
-              <option key={newContent._id}
-              value={newContent}> 
-              {newContent.title}</option>
-            ))} */}
-          {/* </select> */}
+        <div className="addProductItem">
+          <label>Trailer</label>
+          <input
+            type="file"
+            name="trailer"
+            onChange={(e) => setTrailer(e.target.files[0])}
+          />
         </div>
-        <button className="addProductButton" >Create</button>
+        <div className="addProductItem">
+          <label>Video</label>
+          <input
+            type="file"
+            name="video"
+            onChange={(e) => setVideo(e.target.files[0])}
+          />
+        </div>
+        {uploaded === 5 ? (
+          <button className="addProductButton" onClick={handleSubmit}>
+            Create
+          </button>
+        ) : (
+          <button className="addProductButton" onClick={handleUpload}>
+            Upload
+          </button>
+        )}
       </form>
     </div>
   );

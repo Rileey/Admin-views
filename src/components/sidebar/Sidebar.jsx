@@ -4,14 +4,16 @@ import {
   Timeline,
   TrendingUp,
   PermIdentity,
-  Movie,
-  ViewListRounded,
-  PlayArrow,
+  PlayCircleOutline,
+  List,
   MailOutline,
   DynamicFeed,
   ChatBubbleOutline,
   WorkOutline,
   Report,
+  AddToQueue,
+  QueuePlayNext,
+  FileCopy
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
@@ -23,10 +25,10 @@ export default function Sidebar() {
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
             <Link to="/" className="link">
-            <li className="sidebarListItem active">
-              <LineStyle className="sidebarIcon" />
-              Home
-            </li>
+              <li className="sidebarListItem active">
+                <LineStyle className="sidebarIcon" />
+                Home
+              </li>
             </Link>
             <li className="sidebarListItem">
               <Timeline className="sidebarIcon" />
@@ -49,21 +51,33 @@ export default function Sidebar() {
             </Link>
             <Link to="/movies" className="link">
               <li className="sidebarListItem">
-                <Movie className="sidebarIcon" />
+                <PlayCircleOutline className="sidebarIcon" />
                 Movies
               </li>
             </Link>
-            <Link to="/content" className="link">
-            <li className="sidebarListItem">
-              <PlayArrow className="sidebarIcon" />
-              Movie Content
-            </li>
+            <Link to="/files" className="link">
+              <li className="sidebarListItem">
+                <FileCopy className="sidebarIcon" />
+                Movie Files
+              </li>
             </Link>
             <Link to="/lists" className="link">
-            <li className="sidebarListItem">
-              <ViewListRounded className="sidebarIcon" />
-              List
-            </li>
+              <li className="sidebarListItem">
+                <List className="sidebarIcon" />
+                Lists
+              </li>
+            </Link>
+            <Link to="/newMovie" className="link">
+              <li className="sidebarListItem">
+                <AddToQueue className="sidebarIcon" />
+                Add Movie
+              </li>
+            </Link>
+            <Link to="/newList" className="link">
+              <li className="sidebarListItem">
+                <QueuePlayNext className="sidebarIcon" />
+                Add List
+              </li>
             </Link>
           </ul>
         </div>
@@ -81,6 +95,23 @@ export default function Sidebar() {
             <li className="sidebarListItem">
               <ChatBubbleOutline className="sidebarIcon" />
               Messages
+            </li>
+          </ul>
+        </div>
+        <div className="sidebarMenu">
+          <h3 className="sidebarTitle">Staff</h3>
+          <ul className="sidebarList">
+            <li className="sidebarListItem">
+              <WorkOutline className="sidebarIcon" />
+              Manage
+            </li>
+            <li className="sidebarListItem">
+              <Timeline className="sidebarIcon" />
+              Analytics
+            </li>
+            <li className="sidebarListItem">
+              <Report className="sidebarIcon" />
+              Reports
             </li>
           </ul>
         </div>

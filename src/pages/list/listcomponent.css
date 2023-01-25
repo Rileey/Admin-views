@@ -1,0 +1,23 @@
+.cover{
+    display: flex;
+    background-color: #000;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-title {
+    color: white;
+    font-size: 10px;
+    margin-right: 5px;
+}
+
+.cancel {
+    font-size: 9px;
+}
+
+.click {
+    cursor: pointer;
+    display: flex;
+    
+}

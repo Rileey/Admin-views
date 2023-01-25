@@ -8,12 +8,8 @@
   flex-wrap: wrap;
 }
 
-.addProductTitle {
-  margin-left: 25px;
-}
-
 .addProductItem {
-  width: 350px;
+  width: 250px;
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
@@ -30,9 +26,6 @@
   padding: 10px;
 }
 
-#last{
-  margin-bottom: 60px;
-}
 .addProductItem > select {
   padding: 10px;
 }
@@ -43,22 +36,9 @@
   padding: 7px 10px;
   border: none;
   border-radius: 10px;
-  background-color: #ff7e00; 
+  background-color: darkblue;
   color: white;
   font-weight: 600;
   cursor: pointer;
   align-self: center;
-}
-
-select { 
-  outline: none;
-}
-
-select::-webkit-scrollbar{
-  display: none;
-}
-
-select > option {
-  font-size: 20px;
-  padding: 5px 20px;
 }

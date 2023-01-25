@@ -1,67 +1,46 @@
 import axios from "axios";
-import { createMovieFailure, createMovieStart, createMovieSuccess, getMoviesFailure, getMoviesStart, getMoviesSuccess, updateMovieFailure, updateMovieStart, updateMovieSuccess } from "./movieActions"
-import { deleteMovieSuccess, deleteMovieFailure, deleteMovieStart } from "./movieActions";
-
+import { API_URL } from "../../BaseUrl/baseurl";
+import authHeader from "../../services/auth-header";
+import {
+  createMovieFailure,
+  createMovieStart,
+  createMovieSuccess,
+  deleteMovieFailure,
+  deleteMovieStart,
+  deleteMovieSuccess,
+  getMoviesFailure,
+  getMoviesStart,
+  getMoviesSuccess,
+} from "./MovieActions";
 
 export const getMovies = async (dispatch) => {
-    dispatch(getMoviesStart());
+  dispatch(getMoviesStart());
+  try {
+    const res = await axios.get( API_URL + "movie/allmovies", { headers: authHeader() });
+    dispatch(getMoviesSuccess(res?.data?.data));
+  } catch (err) {
+    dispatch(getMoviesFailure());
+  }
+};
 
-    try {
-        const res = await axios.get('/movies', {
-            headers: {
-                token: 'Bearer '+ JSON.parse(localStorage.getItem('user')).accessToken 
-            }
-        });
-        dispatch(getMoviesSuccess(res.data))
-    } catch (err) {
-        dispatch(getMoviesFailure());
-    }
-}
-
+//create
 export const createMovie = async (movie, dispatch) => {
-    dispatch(createMovieStart());
+  dispatch(createMovieStart());
+  try {
+    const res = await axios.post( API_URL + "/movie", movie, { headers: authHeader() });
+    dispatch(createMovieSuccess(res.data));
+  } catch (err) {
+    dispatch(createMovieFailure());
+  }
+};
 
-    try {
-        const res = await axios.post('/movies', movie, {
-            headers: {
-                token: 'Bearer '+ JSON.parse(localStorage.getItem('user')).accessToken 
-            }
-        });
-        dispatch(createMovieSuccess(res.data))
-    } catch (err) {
-        dispatch(createMovieFailure());
-    }
-}
-
-
-export const updateMovie = async (id, movie, dispatch) => {
-    dispatch(updateMovieStart());
-
-    try{
-        const res = await axios.put('/movies' + id, movie, {
-            headers: {
-                token: 'Bearer '+ JSON.parse(localStorage.getItem('user')).accessToken 
-            }
-        });
-        dispatch(updateMovieSuccess(res.data))
-    } catch (err) {
-        dispatch(updateMovieFailure());
-    }
-
-}
-
-
-
+//delete
 export const deleteMovie = async (id, dispatch) => {
-    dispatch(deleteMovieStart());
-    try {
-        await axios.delete('/movies/' + id, {
-            headers: {
-                token: "Bearer "+ JSON.parse(localStorage.getItem('user')).accessToken 
-            }
-        });
-        dispatch(deleteMovieSuccess(id))
-    } catch (err) {
-        dispatch(deleteMovieFailure());
-    }
-}
+  dispatch(deleteMovieStart());
+  try {
+    await axios.delete(API_URL + "movie/" + id, { headers: authHeader() });
+    dispatch(deleteMovieSuccess(id));
+  } catch (err) {
+    dispatch(deleteMovieFailure());
+  }
+};

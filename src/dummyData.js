@@ -249,3 +249,31 @@ export const userData = [
       price: "$120.00",
     },
   ];
+
+
+  export const listRows = [
+    {
+      id: 1,
+      title: 'Jig',
+      genre: 'Drama',
+      type: 'Movie'
+    },
+    {
+      id: 2,
+      title: 'Jigg',
+      genre: 'Drama',
+      type: 'Movie'
+    },
+    {
+      id: 3,
+      title: 'Jigga',
+      genre: 'Drama',
+      type: 'Movie'
+    },
+    {
+      id: 4,
+      title: 'Jiggan',
+      genre: 'Drama',
+      type: 'Movie'
+    },
+  ]

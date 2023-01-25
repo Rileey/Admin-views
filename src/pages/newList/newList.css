@@ -1,6 +1,9 @@
 .newProduct {
   flex: 4;
 }
+.addProductTitle{
+  text-align: center;
+}
 
 .addProductForm {
   margin-top: 10px;
@@ -8,8 +11,12 @@
   flex-wrap: wrap;
 }
 
-.addProductTitle {
-  margin-left: 25px;
+.form-button{
+  margin-left: 20px;
+}
+
+.cont {
+  width: 100%;
 }
 
 .addProductItem {
@@ -17,7 +24,37 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+}
+
+.form {
+  display: flex;
+  width: 60%;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.addListForm {
+  margin-top: 100px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.addListItem {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
   padding: 20px;
+}
+
+.select {
+  padding: 10px 5px;
+  cursor: pointer;
+}
+
+textarea{
+  resize: none;
+  height: 100px;
 }
 
 .addProductItem > label {
@@ -34,13 +71,15 @@
   padding: 10px;
 }
 
-.addProductButton {
-  height: 30px;
+.addButton {
+  height: 40px;
+  font-size: 20px;
   margin-top: 10px;
-  padding: 7px 10px;
+  cursor: pointer;
+  padding: 10px 15px;
   border: none;
   border-radius: 10px;
-  background-color: #ff7e00; 
+  background-color: #ff7e00;
   color: white;
   font-weight: 600;
   cursor: pointer;

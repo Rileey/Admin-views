@@ -10,15 +10,20 @@
 }
 
 .productAddButton {
-  width: 80px;
+  width: 120px;
   border: none;
-  padding: 5px;
-  background-color: #ff7e00;
+  padding: 10px 5px;
+  background-color: teal;
   color: white;
   border-radius: 5px;
   font-size: 16px;
-  cursor: pointer; 
-  margin-right: 20px;
+  cursor: pointer;
+}
+
+.contain {
+  display: flex;
+  width: 250px;
+  overflow-x: auto;
 }
 
 .productTop {
@@ -59,11 +64,13 @@
 }
 
 .productInfoItem {
+  width: 150px;
   display: flex;
+  justify-content: space-between;
 }
 
-.productInfoKey {
-  margin-right: 10px;
+.productInfoKey{
+  margin-right: 20px;
 }
 
 .productInfoValue {
@@ -126,7 +133,7 @@
   border: none;
   padding: 5px;
   border-radius: 5px;
-  background-color: #ff7e00;
+  background-color: darkblue;
   color:white;
   font-weight: 600;
   cursor: pointer;
