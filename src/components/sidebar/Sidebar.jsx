@@ -67,12 +67,6 @@ export default function Sidebar() {
                 Lists
               </li>
             </Link>
-            <Link to="/newMovie" className="link">
-              <li className="sidebarListItem">
-                <AddToQueue className="sidebarIcon" />
-                Add Movie
-              </li>
-            </Link>
             <Link to="/newList" className="link">
               <li className="sidebarListItem">
                 <QueuePlayNext className="sidebarIcon" />

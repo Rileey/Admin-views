@@ -19,7 +19,7 @@ export default function MovieList() {
 
   const handleDelete = (id) => {
     deleteMovie(id, dispatch);
-    window.location.reload()
+    // window.location.reload()
   };
 
   if (movies === [] || movies.length === 0){

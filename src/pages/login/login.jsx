@@ -20,7 +20,7 @@ export default function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
     login({ email, password }, dispatch);
-    // history.push('/')
+    history.push('/')
   };
 
   return (

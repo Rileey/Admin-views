@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { getUserBoard } from './user.service';
 
-const API_URL = "http://localhost:8000/api/"
+// const API_URL = "http://localhost:8000/api/"
+
+const API_URL = "https://eng.talentcroft.com/api/"
 
 const Register = (first_name, last_name, email, phone_number, password) => {
     return axios.post(API_URL + "user/register", {

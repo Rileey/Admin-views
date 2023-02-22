@@ -1,7 +1,9 @@
 import axios from "axios";
 import { loginFailure, loginStart, loginSuccess } from "./AuthActions";
 
-export const API_URL = 'http://127.0.0.1:8000/api/'
+// export const API_URL = 'http://127.0.0.1:8000/api/'
+
+const API_URL = "https://eng.talentcroft.com/api/"
 
 export const login = async (user, dispatch) => {
   dispatch(loginStart());

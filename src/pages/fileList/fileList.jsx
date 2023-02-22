@@ -19,7 +19,7 @@ export default function FileList() {
 
   const handleDelete = (id) => {
     deleteFile(id, dispatch);
-    window.location.reload()
+    // window.location.reload()
   };
 
   if (files === [] || files.length === 0){
